@@ -1,71 +1,42 @@
-# React + TypeScript + Vite
+# BPM Ruler
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AR-style measurement tool by **BPM Print & Workwear** — measure anything with your phone camera.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Measure** (`/measure`) — full-screen camera view; tap to place two points and get the distance. Calibrate against a known object (credit card 85.6 mm, US quarter, A4 paper, or custom) for real-world mm/cm/inch readings. Draggable endpoints, undo, freeze-frame, camera flip, demo-scene fallback when no camera is available.
+- **Screen Ruler** (`/ruler`) — on-screen ruler with draggable caliper lines, live W×H readouts, zero-set, and a 3-step DPI calibration wizard.
+- **History** (`/history`) — local-first log of saved measurements with snapshot thumbnails, rename, search/filter/sort, CSV/JSON export, share, and undo-delete.
+- **PWA** — installable straight from the browser (Add to Home Screen); works offline after first load.
+- **Android app** — native wrapper via Capacitor 7 (appId `com.bpmruler.app`).
 
-## React Compiler
+## Tech stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Node.js 20 · React 19 + TypeScript · Vite 7 · Tailwind CSS v3.4 · shadcn/ui · GSAP · Framer Motion · Lenis · Capacitor 7
 
-## Expanding the ESLint configuration
+## Run the web app
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Build for production: `npm run build` (output in `dist/`).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+> Note: binary assets (images in `public/`, `gradle-wrapper.jar`, launcher icons) are not in this repo — they are available in the full source bundle. `package-lock.json` is omitted; regenerate with `npm install`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Build the Android app
+
+Requires JDK 21 + Android SDK (platform 35, build-tools 35.0.0):
+
+```bash
+npm install
+npm run build
+npx cap sync android
+cd android
+./gradlew assembleDebug   # APK: app/build/outputs/apk/debug/app-debug.apk
 ```
+
+## Branding
+
+CMYK identity (cyan `#00b0f0` / magenta `#e02090` / yellow `#f0e810`) on near-black — matching the BPM print brand.
